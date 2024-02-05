@@ -1,0 +1,26 @@
+name: Run Selenium Script
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  run_selenium_script:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update -qy
+          sudo apt-get install -y python3
+
+      - name: Run Selenium Script
+        run: python3 Automated_Login.py ${{ secrets.USERNAME }} ${{ secrets.PASSWORD }}
+        env:
+          USERNAME: ${{ secrets.USERNAME }}
+          PASSWORD: ${{ secrets.PASSWORD }}
+        shell: bash
