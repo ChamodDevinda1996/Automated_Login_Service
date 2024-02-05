@@ -1,0 +1,12 @@
+stages:
+  - run_selenium_script
+
+run_selenium_script:
+  stage: run_selenium_script
+  script:
+    - apt-get update -qy
+    - apt-get install -y python3
+    - python3 Automated_Login.py $USERNAME $PASSWORD
+  variables:
+    USERNAME: "$USERNAME"
+    PASSWORD: "$PASSWORD"

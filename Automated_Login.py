@@ -5,6 +5,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
+import argparse
 
 try:
      # Get the path to the directory containing this script
@@ -16,20 +17,26 @@ try:
     # s = Service('C:\\Users\\Chamod.Devinda\\Downloads\\Selenium\\msedgedriver.exe')
     # driver = webdriver.Edge(service=s)
 
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('username', type=str, help='Your username')
+    parser.add_argument('password', type=str, help='Your password')
+    args = parser.parse_args()
+
     edge_service = Service(webdriver_path)
     driver = webdriver.Edge(service=edge_service)
 
     driver.get("https://app.mihcm.com/")
-
+ 
     wait = WebDriverWait(driver, 20)
 
     wait.until(EC.presence_of_all_elements_located((By.XPATH,"""/html/body/div/div[2]/div[2]/div[1]/form/div[1]/input""")))
 
     username = driver.find_element(By.XPATH,"""/html/body/div/div[2]/div[2]/div[1]/form/div[1]/input""")
-    username.send_keys("chamod.devinda@kaleris.com")
+    username.send_keys(args.username)
 
     password = driver.find_element(By.XPATH,"""/html/body/div/div[2]/div[2]/div[1]/form/div[2]/input""")
-    password.send_keys("Cham!k2@Ka13r!s")
+    password.send_keys(args.password)
 
     driver.find_element(By.XPATH,"""//*[@id="btnSignin"]""").click()
     
